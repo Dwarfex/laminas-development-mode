@@ -116,11 +116,12 @@ class Enable
      */
     private function copy($source, $destination)
     {
+        $createdSymlink = false;
         if ($this->supportsSymlinks()) {
-            symlink(basename($source), $destination);
-            return;
+            $createdSymlink = symlink(basename($source), $destination);
         }
-
-        copy($source, $destination);
+        if (!$createdSymlink) {
+            copy($source, $destination);
+        }
     }
 }
